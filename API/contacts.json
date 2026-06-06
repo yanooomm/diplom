@@ -1,0 +1,114 @@
+{
+  "methods": [
+    {
+      "uri": "/api/contacts",
+      "http": "GET",
+      "description": "Получить контактную информацию сервиса для указанного города",
+      "auth": false,
+      "usage": [
+        "Страница «Контакты»"
+      ],
+      "db_tables": [
+        "contacts",
+        "city"
+      ],
+      "request_params": [
+        {
+          "name": "city_id",
+          "location": "body",
+          "type": "string",
+          "required": true,
+          "format": "число",
+          "example": "1"
+        },
+        {
+          "name": "platform",
+          "location": "headers",
+          "type": "string",
+          "required": true,
+          "format": "число: 1 — iOS, 2 — Android, 3 — Web",
+          "example": "1"
+        },
+        {
+          "name": "device_token",
+          "location": "headers",
+          "type": "string",
+          "required": true,
+          "format": "UUID",
+          "example": "token1234"
+        }
+      ],
+      "responses": [
+        {
+          "code": 200,
+          "condition": "Город найден, контакты получены",
+          "format": "JSON",
+          "description": "Массив объектов контактной информации"
+        },
+        {
+          "code": 200,
+          "condition": "Несуществующий идентификатор города",
+          "format": "JSON",
+          "description": "ResponseCode: 3 — такого города нет"
+        },
+        {
+          "code": 200,
+          "condition": "Некорректный формат идентификатора",
+          "format": "JSON",
+          "description": "ResponseCode: 2 — неверно указан город"
+        }
+      ],
+      "response_fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "purpose": "Идентификатор контакта",
+          "example": "1"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": true,
+          "purpose": "Тип контакта: phone, address, vk",
+          "example": "phone"
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "required": true,
+          "purpose": "Содержимое контакта",
+          "example": "+7 (999) 123-45-67"
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "purpose": "Дополнительное описание",
+          "example": "null"
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "required": true,
+          "purpose": "Название файла иконки",
+          "example": "phone.png"
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "required": true,
+          "purpose": "Ссылка для перехода или номер телефона",
+          "example": "+79991234567"
+        },
+        {
+          "name": "ResponseMessage",
+          "type": "string",
+          "required": true,
+          "purpose": "Текст сообщения об ошибке",
+          "example": "Такого города нет"
+        }
+      ]
+    }
+  ]
+}
